@@ -14,29 +14,25 @@ public class JsonTransformer {
 
     // these functions actually do something
 
-    private static Function<JsonObject, JsonObject> only(List<String> keys) {
-        return (JsonObject x) -> {
-            var y = new JsonObject();
-            for (var entry : x.entrySet()) {
-                if (keys.contains(entry.getKey())) {
-                    y.add(entry.getKey(), entry.getValue());
-                }
+    private static JsonObject only(JsonObject x, List<String> keys) {
+        var y = new JsonObject();
+        for (var entry : x.entrySet()) {
+            if (keys.contains(entry.getKey())) {
+                y.add(entry.getKey(), entry.getValue());
             }
-            return y;
-        };
+        }
+        return y;
     }
 
-    private static Function<JsonObject, JsonObject> except(List<String> keys) {
+    private static JsonObject except(JsonObject x, List<String> keys) {
         // if java were better... lambda x: {k: v for k, v in x.items() if k not in keys}
-        return (JsonObject x) -> {
-            var y = new JsonObject();
-            for (var entry : x.entrySet()) {
-                if (!keys.contains(entry.getKey())) {
-                    y.add(entry.getKey(), entry.getValue());
-                }
+        var y = new JsonObject();
+        for (var entry : x.entrySet()) {
+            if (!keys.contains(entry.getKey())) {
+                y.add(entry.getKey(), entry.getValue());
             }
-            return y;
-        };
+        }
+        return y;
     }
 
     public String transform(String json) {
@@ -57,11 +53,11 @@ public class JsonTransformer {
     }
 
     public void addFilterOnly(List<String> keys) {
-        transforms.add(only(keys));
+        transforms.add(x -> only(x, keys));
     }
 
     public void addFilterExcept(List<String> keys) {
-        transforms.add(except(keys));
+        transforms.add(x -> except(x, keys));
     }
 }
 
