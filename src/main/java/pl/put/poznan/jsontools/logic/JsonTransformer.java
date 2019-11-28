@@ -2,8 +2,8 @@ package pl.put.poznan.jsontools.logic;
 
 import com.google.gson.*;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class JsonTransformer {
@@ -45,11 +45,11 @@ public class JsonTransformer {
     // these functions are basically useless
 
     public void addBeautify() {
-        minify = true;
+        minify = false;
     }
 
     public void addMinify() {
-        minify = false;
+        minify = true;
     }
 
     public void addFilterOnly(List<String> keys) {
