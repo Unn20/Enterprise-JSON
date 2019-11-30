@@ -4,9 +4,19 @@ import com.google.gson.*;
 
 import java.util.*;
 
+/**
+ * A concrete decorator class, that adds filtering to a JSON transformation
+ * @see #transform(String) for the transformation description
+ */
 public class JsonOnly extends JsonDecorator {
     private List<String> keys;
 
+    /**
+     * Decorates a JsonTransformer with a filtering transformation
+     * @param decoratedJson JsonTransformer to be decorated
+     * @param keys Keys tat will be kept in the JSON dictionary  after the transformation
+     * @see #transform(String) for the transformation description
+     */
     public JsonOnly(JsonTransformer decoratedJson, List<String> keys) {
         super(decoratedJson);
         this.keys = keys;

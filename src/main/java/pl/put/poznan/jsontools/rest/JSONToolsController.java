@@ -1,6 +1,5 @@
 package pl.put.poznan.jsontools.rest;
 
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,18 +21,6 @@ public class JSONToolsController {
         logger.debug(Arrays.toString(keys));
         try {
             var res = new JsonOnly(new JsonTransform(), Arrays.asList(keys)).transform(text);
-            return ResponseEntity.ok(res);
-        } catch (JsonSyntaxException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SYNTAX_ERROR);
-        }
-    }
-
-    @RequestMapping(value = "/except/{text}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getExcept(@PathVariable String text, @RequestParam(value = "keys", defaultValue = "") String[] keys) {
-        logger.debug(text);
-        logger.debug(Arrays.toString(keys));
-        try {
-            var res = new JsonExcept(new JsonTransform(), Arrays.asList(keys)).transform(text);
             return ResponseEntity.ok(res);
         } catch (JsonSyntaxException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SYNTAX_ERROR);

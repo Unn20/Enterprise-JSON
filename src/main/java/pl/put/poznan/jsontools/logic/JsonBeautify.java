@@ -2,7 +2,16 @@ package pl.put.poznan.jsontools.logic;
 
 import com.google.gson.*;
 
+/**
+ * A concrete decorator class, that adds beautifying to a JSON transformation
+ * @see #transform(String) for the transformation description
+ */
 public class JsonBeautify extends JsonDecorator {
+    /**
+     * Decorates a JsonTransformer with a beautifying transformation
+     * @param decoratedJson JsonTransformer to be decorated
+     * @see #transform(String) for the transformation description
+     */
     public JsonBeautify(JsonTransformer decoratedJson) {
         super(decoratedJson);
     }

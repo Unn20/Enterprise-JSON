@@ -2,7 +2,16 @@ package pl.put.poznan.jsontools.logic;
 
 import com.google.gson.*;
 
+/**
+ * A concrete decorator class, that adds minifying to a JSON transformation
+ * @see #transform(String) for the transformation description
+ */
 public class JsonMinify extends JsonDecorator {
+    /**
+     * Decorates a JsonTransformer with a minifying transformation
+     * @param decoratedJson JsonTransformer to be decorated
+     * @see #transform(String) for the transformation description
+     */
     public JsonMinify(JsonTransformer decoratedJson) {
         super(decoratedJson);
     }
