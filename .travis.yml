@@ -1,1 +1,10 @@
 language: java
+
+deploy:
+  on:
+    tags: true
+  provider: releases
+  skip_cleanup: true
+  file: target/jsontools-1.0.0.jar
+  api_key:
+    secure: $GH_SECRET
