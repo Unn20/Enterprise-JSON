@@ -1,9 +1,17 @@
 language: java
+sudo: false
+
+script: mvn clean assembly:assembly
+
+cache:
+  directories:
+    - .autoconf
+    - $HOME/.m2
 
 deploy:
+  provider: releases
   on:
     tags: true
-  provider: releases
   skip_cleanup: true
   file: target/jsontools-1.0.0.jar
   api_key:
