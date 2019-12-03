@@ -1,7 +1,7 @@
 language: java
 sudo: false
 
-script: mvn clean assembly:assembly
+script: mvn clean assembly:assembly && zip -r apidocs target/apidocs
 
 cache:
   directories:
@@ -13,6 +13,6 @@ deploy:
   on:
     tags: true
   skip_cleanup: true
-  file: target/jsontools-jar-with-dependencies.jar
+  file: target/jsontools-jar-with-dependencies.jar apidocs.zip
   api_key:
     secure: $GH_SECRET
