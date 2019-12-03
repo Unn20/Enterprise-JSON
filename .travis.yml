@@ -13,6 +13,8 @@ deploy:
   on:
     tags: true
   skip_cleanup: true
-  file: target/jsontools-jar-with-dependencies.jar apidocs.zip
+  file:
+    - target/jsontools-jar-with-dependencies.jar 
+    - apidocs.zip
   api_key:
     secure: $GH_SECRET
