@@ -10,13 +10,14 @@ import pl.put.poznan.jsontools.logic.*;
 
 import java.util.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class JSONToolsController {
     private static final Logger logger = LoggerFactory.getLogger(JSONToolsController.class);
     private static final String SYNTAX_ERROR = "syntax error";
 
-    @RequestMapping(value = "/only/{text}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getOnly(@PathVariable String text, @RequestParam(value = "keys", defaultValue = "") String[] keys) {
+    @RequestMapping(value = "/only", method = RequestMethod.POST, produces = "application/json", headers = {"content-type=text/plain"})
+    public ResponseEntity getOnly(@RequestBody String text, @RequestParam(value = "keys", defaultValue = "") String[] keys) {
         logger.debug(text);
         logger.debug(Arrays.toString(keys));
         try {
@@ -27,8 +28,19 @@ public class JSONToolsController {
         }
     }
 
-    @RequestMapping(value = "/beautify/{text}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getBeautify(@PathVariable String text) {
+    @RequestMapping(value = "/except", method = RequestMethod.POST, produces = "application/json", headers = {"content-type=text/plain"})
+    public ResponseEntity getExcept(@RequestBody String text, @RequestParam(value = "keys", defaultValue = "") String[] keys) {
+        logger.debug(text);
+        logger.debug(Arrays.toString(keys));
+        try {
+            var res = new JsonExcept(new JsonTransform(), Arrays.asList(keys)).transform(text);
+            return ResponseEntity.ok(res);
+        } catch (JsonSyntaxException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SYNTAX_ERROR);
+        }
+    }
+    @RequestMapping(value = "/beautify", method = RequestMethod.POST, produces = "application/json", headers = {"content-type=text/plain"})
+    public ResponseEntity getBeautify(@RequestBody String text) {
         logger.debug(text);
         try {
             var res = new JsonBeautify(new JsonTransform()).transform(text);
@@ -38,8 +50,8 @@ public class JSONToolsController {
         }
     }
 
-    @RequestMapping(value = "/minify/{text}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getMinify(@PathVariable String text) {
+    @RequestMapping(value = "/minify", method = RequestMethod.POST, produces = "application/json", headers = {"content-type=text/plain"})
+    public ResponseEntity getMinify(@RequestBody String text) {
         logger.debug(text);
         try {
             var res = new JsonMinify(new JsonTransform()).transform(text);

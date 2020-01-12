@@ -1,12 +1,13 @@
 package pl.put.poznan.jsontools.logic;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonBeautifyTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testTransform() {
         var res = new JsonBeautify(new JsonTransform()).transform("{}");
         Assert.assertEquals(res, "{}");
