@@ -60,5 +60,13 @@ public class JSONToolsController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SYNTAX_ERROR);
         }
     }
+
+    @RequestMapping(value = "/compare", method = RequestMethod.POST, produces = "application/json", headers = {"content-type=text/plain"})
+    public ResponseEntity getCompare(@RequestBody String text) {
+        logger.debug(text);
+        var texts = text.split("\0\0\0");
+        var res = TextComparator.compare(texts[0], texts[1]);
+        return ResponseEntity.ok(res);
+    }
 }
 
