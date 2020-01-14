@@ -39,6 +39,18 @@ class JSONToolsControllerTest {
         Assert.assertEquals(OKResponse, jt.getOnly(value, keys));
     }
     @Test
+    void getOnlyTwoKey() {
+        JSONToolsController jt = mock(JSONToolsController.class);
+        String[] keys = {"title", "price"};
+        String value = "{\"title\":\"Nowy\",\"price\":\"100\",\"author\":\"Malinowski\"}";
+
+        var res = new JsonOnly(new JsonTransform(), Arrays.asList(keys)).transform(value);
+        when(jt.getOnly(value, keys)).thenReturn(ResponseEntity.ok(res));
+
+        ResponseEntity<String> OKResponse = new ResponseEntity<>("{\"title\":\"Nowy\",\"price\":\"100\"}", HttpStatus.OK);
+        Assert.assertEquals(OKResponse, jt.getOnly(value, keys));
+    }
+    @Test
     void getOnlyThreeKeys() {
         JSONToolsController jt = mock(JSONToolsController.class);
         String[] keys = {"title", "price", "author"};
@@ -85,6 +97,18 @@ class JSONToolsControllerTest {
         when(jt.getExcept(value, keys)).thenReturn(ResponseEntity.ok(res));
 
         ResponseEntity<String> OKResponse = new ResponseEntity<>("{\"price\":\"100\",\"author\":\"Malinowski\"}", HttpStatus.OK);
+        Assert.assertEquals(OKResponse, jt.getExcept(value, keys));
+    }
+    @Test
+    void getExceptTwoKey() {
+        JSONToolsController jt = mock(JSONToolsController.class);
+        String[] keys = {"title", "price"};
+        String value = "{\"title\":\"Nowy\",\"price\":\"100\",\"author\":\"Malinowski\"}";
+
+        var res = new JsonExcept(new JsonTransform(), Arrays.asList(keys)).transform(value);
+        when(jt.getExcept(value, keys)).thenReturn(ResponseEntity.ok(res));
+
+        ResponseEntity<String> OKResponse = new ResponseEntity<>("{\"author\":\"Malinowski\"}", HttpStatus.OK);
         Assert.assertEquals(OKResponse, jt.getExcept(value, keys));
     }
     @Test
